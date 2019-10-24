@@ -13,7 +13,7 @@ const app = new App({
 
 const checkText = text => {
   return alex.text(text, {
-    allow: ["he-she", "her-him", "host-hostess"],
+    allow: ["he-she", "her-him", "herself-himself", "host-hostess"],
     noBinary: false,
     profanitySureness: 3
   }).messages;
