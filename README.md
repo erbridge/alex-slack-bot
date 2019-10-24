@@ -17,23 +17,15 @@ conversations.
 
    Turn _Always Show My Bot as Online_ on.
 
-1. Add the following scopes via _OAuth & Permissions_ > _Scopes_:
-
-   - `channels:read` for listening for new channels as they are created.
-   - `channels:write` for inviting the bot user to channels automatically.
-
 1. Install the app to your workspace via _Install App_.
 
 1. Deploy this app code somewhere. You will need the environment variables
    documented in [`.env.example`](.env.example).
 
-   - `SLACK_BOT_NAME` is the name you gave to the bot user.
    - `SLACK_BOT_TOKEN` is the _Bot User OAuth Access Token_ from _OAuth &
      Permissions_ > _OAuth Tokens & Redirect URLs_.
    - `SLACK_SIGNING_SECRET` is the _Signing Secret_ from _Basic Information_ >
      _App Credentials_.
-   - `SLACK_USER_TOKEN` is the _OAuth Access Token_ from _OAuth & Permissions_ >
-     _OAuth Tokens & Redirect URLs_.
 
 1. Enable events via _Event Subscriptions_ and insert the request URL your
    deployed app will have, followed by `/slack/events`. For example, if you're
@@ -48,10 +40,8 @@ conversations.
 
 ## Usage
 
-Once you launch the Slack app, the bot user will be added to all public
-channels. When new public channels are created, the bot user will automatically
-be added to them, too. You can also manually add it to any other channel you
-want to monitor by inviting it as you would any other user.
+Once the app is set up and running, add the bot to the channels you want it to
+monitor. Invite it like you would any other user.
 
 As messages are sent in channels the bot user is a member of, the app will pass
 them through Alex. If it detects any issues, it will send an ephemeral message
