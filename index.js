@@ -15,6 +15,8 @@ const checkText = text => {
   return alex.text(text, {
     allow: ["he-she", "her-him", "herself-himself", "host-hostess"],
     noBinary: false,
+    // Setting `profanitySureness` outside the range [0, 2] effectively
+    // disables profanity checking.
     profanitySureness: 3
   }).messages;
 };
