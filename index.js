@@ -59,7 +59,7 @@ const listNewChannelIdsForUser = async (userId, cursor) => {
 
 const checkText = text => {
   return alex.text(text, {
-    allow: ["he-she", "her-him"],
+    allow: ["he-she", "her-him", "host-hostess"],
     noBinary: false,
     profanitySureness: 3
   }).messages;
