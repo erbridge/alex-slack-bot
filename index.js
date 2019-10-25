@@ -6,19 +6,28 @@ const uniqBy = require("lodash/uniqBy");
 
 const { SLACK_BOT_TOKEN, SLACK_SIGNING_SECRET } = process.env;
 
+const alexConfig = {
+  allow: [
+    "bi",
+    "he-she",
+    "her-him",
+    "herself-himself",
+    "host-hostess",
+    "invalid"
+  ],
+  noBinary: false,
+  // Setting `profanitySureness` outside the range [0, 2] effectively
+  // disables profanity checking.
+  profanitySureness: 3
+};
+
 const app = new App({
   token: SLACK_BOT_TOKEN,
   signingSecret: SLACK_SIGNING_SECRET
 });
 
 const checkText = text => {
-  return alex.text(text, {
-    allow: ["he-she", "her-him", "herself-himself", "host-hostess"],
-    noBinary: false,
-    // Setting `profanitySureness` outside the range [0, 2] effectively
-    // disables profanity checking.
-    profanitySureness: 3
-  }).messages;
+  return alex.text(text, alexConfig).messages;
 };
 
 const excludeBotMessages = ({ message, next }) => {
