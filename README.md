@@ -1,9 +1,9 @@
-# Alex Slack Bot
+# Reilly Slack Bot
 
-A Slack bot for running [Alex](https://alexjs.com/) on your team's
-conversations.
+A Slack bot for running [Reilly](https://github.com/erbridge/reilly) on your
+team's conversations.
 
-> Catch insensitive, inconsiderate writing
+> Check conversational English for insensitive language
 
 ## Installation
 
@@ -44,6 +44,6 @@ Once the app is set up and running, add the bot to the channels you want it to
 monitor. Invite it like you would any other user.
 
 As messages are sent in channels the bot user is a member of, the app will pass
-them through Alex. If it detects any issues, it will send an ephemeral message
+them through Reilly. If it detects any issues, it will send an ephemeral message
 (a message only seen by a single user that disappears after they restart Slack)
 to the author of the message in the same channel.

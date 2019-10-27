@@ -1,33 +1,20 @@
 require("dotenv/config");
 
 const { App } = require("@slack/bolt");
-const alex = require("alex");
 const uniqBy = require("lodash/uniqBy");
+const reilly = require("reilly");
 
 const { SLACK_BOT_TOKEN, SLACK_SIGNING_SECRET } = process.env;
-
-const alexConfig = {
-  allow: [
-    "bi",
-    "he-she",
-    "her-him",
-    "herself-himself",
-    "host-hostess",
-    "invalid"
-  ],
-  noBinary: false,
-  // Setting `profanitySureness` outside the range [0, 2] effectively
-  // disables profanity checking.
-  profanitySureness: 3
-};
 
 const app = new App({
   token: SLACK_BOT_TOKEN,
   signingSecret: SLACK_SIGNING_SECRET
 });
 
-const checkText = text => {
-  return alex.text(text, alexConfig).messages;
+const checkText = async text => {
+  const result = await reilly(text, { presets: ["ableism"] });
+
+  return result.messages;
 };
 
 const excludeBotMessages = ({ message, next }) => {
@@ -37,7 +24,7 @@ const excludeBotMessages = ({ message, next }) => {
 };
 
 app.message(excludeBotMessages, async ({ message, context }) => {
-  const results = checkText(message.text);
+  const results = await checkText(message.text);
 
   if (!results || results.length === 0) {
     return;
@@ -47,7 +34,7 @@ app.message(excludeBotMessages, async ({ message, context }) => {
 
   uniqueResults.forEach(result => {
     console.info(
-      `!! Found a violation of alex rule ${result.ruleId}:\n` +
+      `!! Found a violation of rule "${result.ruleId}" from "${result.source}":\n` +
         `!!   user: ${message.user}\n` +
         `!!   channel: ${message.channel}`
     );
