@@ -17,6 +17,22 @@ const checkText = async text => {
   return result.messages;
 };
 
+const createResultBlock = result => {
+  let text = `> ${result.message}.`;
+
+  if (result.note) {
+    text += `\n>\n> ${result.note}`;
+  }
+
+  return {
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text
+    }
+  };
+};
+
 const excludeBotMessages = ({ message, next }) => {
   if (message.subtype !== "bot_message") {
     next();
@@ -54,13 +70,7 @@ app.message(excludeBotMessages, async ({ message, context }) => {
             "your message. Consider editing it."
         }
       },
-      ...uniqueResults.map(result => ({
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `> ${result.message}.`
-        }
-      }))
+      ...uniqueResults.map(createResultBlock)
     ]
   });
 });
