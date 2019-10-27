@@ -12,7 +12,7 @@ const app = new App({
 });
 
 const checkText = async text => {
-  const result = await reilly(text, { presets: ["ableism"] });
+  const result = await reilly(text, { presets: ["ableism", "condescension"] });
 
   return result.messages;
 };
