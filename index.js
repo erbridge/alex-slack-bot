@@ -66,7 +66,7 @@ app.message(excludeBotMessages, async ({ message, context }) => {
         type: "plain_text",
         text:
           "I noticed some possibly insensitive or inconsiderate writing in " +
-          "your message. Consider editing it."
+          "your message."
       }
     },
     ...uniqueResults.map(createResultBlock)
