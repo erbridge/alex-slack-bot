@@ -4,7 +4,7 @@ const { App } = require("@slack/bolt");
 const uniqBy = require("lodash/uniqBy");
 const reilly = require("reilly");
 
-const { SLACK_BOT_TOKEN, SLACK_SIGNING_SECRET } = process.env;
+const { FEEDBACK_URL, SLACK_BOT_TOKEN, SLACK_SIGNING_SECRET } = process.env;
 
 const app = new App({
   token: SLACK_BOT_TOKEN,
@@ -59,22 +59,34 @@ app.message(excludeBotMessages, async ({ message, context }) => {
     );
   });
 
+  const blocks = [
+    {
+      type: "section",
+      text: {
+        type: "plain_text",
+        text:
+          "I noticed some possibly insensitive or inconsiderate writing in " +
+          "your message. Consider editing it."
+      }
+    },
+    ...uniqueResults.map(createResultBlock)
+  ];
+
+  if (FEEDBACK_URL) {
+    blocks.push({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `Do you have some feedback on this bot? Give it here: ${FEEDBACK_URL}`
+      }
+    });
+  }
+
   await app.client.chat.postEphemeral({
     token: context.botToken,
     channel: message.channel,
     user: message.user,
-    blocks: [
-      {
-        type: "section",
-        text: {
-          type: "plain_text",
-          text:
-            "I noticed some possibly insensitive or inconsiderate writing in " +
-            "your message. Consider editing it."
-        }
-      },
-      ...uniqueResults.map(createResultBlock)
-    ]
+    blocks
   });
 });
 

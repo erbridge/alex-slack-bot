@@ -22,6 +22,7 @@ team's conversations.
 1. Deploy this app code somewhere. You will need the environment variables
    documented in [`.env.example`](.env.example).
 
+   - `FEEDBACK_URL` _(optional)_ is the URL to send users to to give feedback.
    - `SLACK_BOT_TOKEN` is the _Bot User OAuth Access Token_ from _OAuth &
      Permissions_ > _OAuth Tokens & Redirect URLs_.
    - `SLACK_SIGNING_SECRET` is the _Signing Secret_ from _Basic Information_ >
