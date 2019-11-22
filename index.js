@@ -69,7 +69,16 @@ app.message(excludeBotMessages, async ({ message, context }) => {
           "your message."
       }
     },
-    ...uniqueResults.map(createResultBlock)
+    ...uniqueResults.map(createResultBlock),
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text:
+          "If this advice doesn't apply here, please ignore it. I'm not able " +
+          "to understand the context of the messages I read."
+      }
+    }
   ];
 
   if (FEEDBACK_URL) {
@@ -77,7 +86,8 @@ app.message(excludeBotMessages, async ({ message, context }) => {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `Do you have some feedback on this bot? Give it here: ${FEEDBACK_URL}`
+        text:
+          "Do you have some feedback on this bot? Give it here: " + FEEDBACK_URL
       }
     });
   }
